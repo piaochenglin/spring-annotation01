@@ -36,4 +36,8 @@ public class Person {
                 ", age=" + age +
                 '}';
     }
+
+    public void say(){
+        System.out.println("say hello");
+    }
 }

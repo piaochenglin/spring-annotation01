@@ -16,6 +16,14 @@
             <version>4.3.12.RELEASE</version>
         </dependency>
 
+        <!-- 导入aspects aop 的包，才能使用aspects aop
+        导入的依赖跟context 一样，只是把context换成aspects-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>4.3.12.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

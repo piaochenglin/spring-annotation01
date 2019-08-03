@@ -12,4 +12,3 @@ target/:
 target/test-classes/
 target/classes/
 .idea/
-src/test/
