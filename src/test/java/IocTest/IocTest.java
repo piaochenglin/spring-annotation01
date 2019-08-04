@@ -29,7 +29,8 @@ public class IocTest {
 
     @Test
     public void test03() {
-        MathCalculator bean = (MathCalculator)annotationConfigApplicationContext.getBean("calculator");
+//        MathCalculator bean = (MathCalculator)annotationConfigApplicationContext.getBean("calculator");
+        MathCalculator bean = annotationConfigApplicationContext.getBean(MathCalculator.class);
         int retVal =bean.div(6,2);
         System.out.println(retVal);
 
