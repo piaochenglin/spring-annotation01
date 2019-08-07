@@ -2,12 +2,127 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- 包扫描，只要标注了@controller，@service，@repository，@component-->
     <!--<context:component-scan base-package="com.piao"/>-->
     <bean id="person" class="com.piao.Person">
+        <!-- setter方法注入-->
         <property name="name" value="park"/>
         <property name="age" value="35"/>
     </bean>
+    <bean id="helloWorld" class="com.piao.hello_world.HelloWorld">
+        <property name="name" value="piaochenglin"/>
+    </bean>
+    <bean id="superCar" class="com.piao.hello_world.SuperCar">
+        <!-- 构造器注入-->
+        <constructor-arg value="audi" index="0"/>
+        <constructor-arg index="1">
+            <!--转义特殊字符-->
+          <value><![CDATA[<shanghai>]]></value>
+        </constructor-arg>
+        <constructor-arg value="100000" index="2"/>
+    </bean>
+    <bean id="superCar2" class="com.piao.hello_world.SuperCar">
+        <constructor-arg value="bmw" index="0" type="java.lang.String"/>
+        <constructor-arg value="beijing" index="1" type="java.lang.String"/>
+        <constructor-arg value="240" index="2" type="double"/>
+    </bean>
+    <!--<bean id="superCar2" class="com.piao.hello_world.SuperCar">-->
+        <!--<constructor-arg value="bmw" index="0"/>-->
+        <!--<constructor-arg value="beijing" index="1"/>-->
+        <!--<constructor-arg value="240" index="2"/>-->
+    <!--</bean>-->
+    <!-- 按类型获取bean，如果有两个bean被找出会报以下的异常
+    org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'com.piao.hello_world.HelloWorld' available: expected single matching bean but found 2: helloWorld,helloWorld2-->
+    <bean id="helloWorld2" class="com.piao.hello_world.HelloWorld">
+        <property name="name" value="piaochenglin"/>
+    </bean>
+
+    <bean id="car11" class="com.piao.hello_world.SuperCar">
+        <constructor-arg index="0">
+            <value>benz</value>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <value>xian</value>
+        </constructor-arg>
+        <constructor-arg >
+            <value type="double">450</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="xiaowang" class="com.piao.hello_world.Person">
+        <property name="name" value="xiaowang"/>
+        <property name="age" value="19"/>
+        <!--<property name="car" ref="car11"/>-->
+
+        <!--<property name="car">-->
+            <!--<ref bean="superCar"/>-->
+        <!--</property>-->
+        <!--内部bean-->
+        <property name="car">
+            <!--null值-->
+            <bean class="com.piao.hello_world.SuperCar">
+                <!--<constructor-arg value="jagar"/>-->
+                <constructor-arg><null/></constructor-arg>
+                <constructor-arg value="chengdu"/>
+                <constructor-arg value="500" type="double"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="xiaoli" class="com.piao.hello_world.Person">
+        <constructor-arg value="xiaoli"/>
+        <constructor-arg value="35"/>
+        <constructor-arg ref="car11"/>
+        <!--<property name="car.price" value="300000"/>-->
+    </bean>
+    <bean id="xin" class="com.piao.hello_world.Person2">
+        <property name="name" value="xinrenlei"/>
+        <property name="age" value="99"/>
+        <property name="cars">
+            <list>
+                <ref bean="car11"/>
+                <ref bean="superCar"/>
+                <!--也可以写内部bean-->
+                <ref bean="superCar2"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="ren3" class="com.piao.hello_world.Person3">
+        <property name="name" value="zhaoliu"/>
+        <property name="age" value="44"/>
+        <property name="cars">
+            <map>
+                <entry key="car1" value-ref="car11"/>
+                <entry key="car2" value-ref="superCar2"/>
+                <entry key="car3" value-ref="superCar"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.piao.hello_world.DataSource">
+        <property name="properties">
+            <props>
+                <prop key="userName">root</prop>
+                <prop key="password">123456</prop>
+                <prop key="jdbcUrl">jdbc:mysql://192.168.1.102:3306/spring</prop>
+                <prop key="driver">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+
+    <util:list id="cars">
+        <ref bean="car11"/>
+        <ref bean="superCar"/>
+    </util:list>
+
+    <bean id="person4" class="com.piao.hello_world.Person4">
+        <property name="name" value="xiaohong"/>
+        <property name="age" value="55"/>
+        <property name="cars" ref="cars"/>
+    </bean>
+    <bean id="person5" class="com.piao.hello_world.Person4" p:name="king" p:age="39" p:cars-ref="cars"/>
 </beans>
