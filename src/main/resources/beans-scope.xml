@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--bean的范围域-->
+    <!--singleton 在容器启动的时候就会实例化bean-->
+    <!--prototype 取得bean的时候才会实例化bean-->
+    <!---->
+    <!--单例的话只有一个，容器知道数量，所以一启动就会实例化-->
+    <!--多例不知道有几个，容器只能在用户取得的时候实例化-->
+    <bean id="car31" class="com.piao.hello_world.SuperCar" scope="singleton" >
+        <property name="brand" value="bmw"/>
+        <property name="corp" value="shanghai"/>
+        <property name="price" value="100000"/>
+        <property name="maxSpeed" value="500"/>
+    </bean>
+
+    <!--<bean id="car32" class="com.piao.hello_world.SuperCar">-->
+        <!--<property name="brand" value="benz"/>-->
+        <!--<property name="corp" value="beijing"/>-->
+        <!--<property name="price" value="200000"/>-->
+        <!--<property name="maxSpeed" value="470"/>-->
+    <!--</bean>-->
+</beans>

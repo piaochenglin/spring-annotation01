@@ -125,4 +125,20 @@
         <property name="cars" ref="cars"/>
     </bean>
     <bean id="person5" class="com.piao.hello_world.Person4" p:name="king" p:age="39" p:cars-ref="cars"/>
+
+    <bean id="address" class="com.piao.hello_world.Address" p:city="shengyang" p:street="changjiangjie"/>
+    <bean id="superCar1" class="com.piao.hello_world.SuperCar" p:brand="bmw" p:corp="automobile" p:price="100000" p:maxSpeed="400.0"/>
+
+<!--<bean id="person6" class="com.piao.hello_world.Person5" p:name="jack" p:age="77" p:address-ref="address" p:superCar-ref="superCar1"/>-->
+    <!--<bean id="person6" class="com.piao.hello_world.Person5" p:name="jack" p:age="77" autowire="byType"/>-->
+    <bean id="person6" class="com.piao.hello_world.Person5" p:name="jack" p:age="77" autowire="byName"/>
+
+    <!--继承-->
+    <!--<bean id="address21" class="com.piao.hello_world.Address" p:city="shenyang" p:street="huanggu" abstract="true"/>-->
+    <!--<bean id="address21"  p:city="shenyang" p:street="huanggu" abstract="true" />-->
+    <bean id="address21" class="com.piao.hello_world.Address" p:city="shenyang" p:street="huanggu" abstract="true" />
+    <!--<bean id="address22" class="com.piao.hello_world.Address" p:city="dalian" p:street="lingsui"/>-->
+    <!--<bean id="address22"   p:street="lingsui" parent="address21"/>-->
+    <bean id="address22"   parent="address21"/>
+
 </beans>

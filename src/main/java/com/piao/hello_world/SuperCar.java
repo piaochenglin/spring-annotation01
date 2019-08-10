@@ -19,6 +19,17 @@ public class SuperCar {
         this.maxSpeed = maxSpeed;
     }
 
+    public SuperCar(String brand, String corp, int price, double maxSpeed) {
+        this.brand = brand;
+        this.corp = corp;
+        this.price = price;
+        this.maxSpeed = maxSpeed;
+    }
+
+    public SuperCar() {
+        System.out.println("SuperCar Constructor ...");
+    }
+
     public String getBrand() {
         return brand;
     }

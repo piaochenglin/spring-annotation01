@@ -22,6 +22,7 @@ public class HelloWorldTest {
         DataSource dataSource = (DataSource)ctx.getBean("dataSource");
         Person4 person4 = (Person4)ctx.getBean("person4");
         Person4 person5 = (Person4)ctx.getBean("person5");
+        Person5 person6 = (Person5)ctx.getBean("person6");
         System.out.println(superCar1);
         System.out.println(superCar2);
         System.out.println(car11);
@@ -32,8 +33,19 @@ public class HelloWorldTest {
         System.out.println(dataSource.getProperties());
         System.out.println(person4);
         System.out.println(person5);
+        System.out.println(person6);
 //        helloWorld.say();
 
+    }
+    @Test
+    public void test02(){
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+//        Address address21 = (Address)ctx.getBean("address21");
+//        Address address21 = (Address)ctx.getBean("address21");
+        Address address22 = (Address)ctx.getBean("address22");
+//        System.out.println(address21);
+//        System.out.println(address21);
+        System.out.println(address22);
     }
 
 }
