@@ -27,6 +27,8 @@ public class AnnotationTest {
         for (String name : beanDefinitionNames){
             System.out.println(name);
         }
+        UserController userController = (UserController)ctx.getBean("userController");
+        userController.save();
         ctx.close();
     }
 
