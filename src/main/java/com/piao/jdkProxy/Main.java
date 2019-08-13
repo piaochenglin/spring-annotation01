@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		ElectricCar car = new ElectricCar();
 		ClassLoader classLoader = car.getClass().getClassLoader();
-		Class[] interfaces = car.getClass().getInterfaces();
+		Class<?>[] interfaces = car.getClass().getInterfaces();
 		InvocationHandler handler = new InvocationHandlerImpl(car);
 		
 		Object o =Proxy.newProxyInstance(classLoader, interfaces,handler);
