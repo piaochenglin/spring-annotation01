@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--如果没有在IoC容器中注入bean，会报NoSuchBeanDefinitionException异常-->
+    <bean id="calculator" class="com.piao.xmlAop.ArithmeticCalculatorImpl">
+
+    </bean>
+
+    <bean id="calculatorLog" class="com.piao.xmlAop.CalculatorLog">
+
+    </bean>
+
+    <bean id="validator" class="com.piao.xmlAop.ValidationAspect">
+
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="pointCut" expression="execution(* com.piao.xmlAop.ArithmeticCalculatorImpl.*(..)))"/>
+
+        <aop:aspect ref="validator" order="1">
+            <aop:before method="validate" pointcut-ref="pointCut"/>
+        </aop:aspect>
+
+        <aop:aspect ref="calculatorLog" order="2">
+            <aop:before method="methodBegins" pointcut-ref="pointCut"/>
+            <aop:after method="methodEnd" pointcut-ref="pointCut"/>
+            <aop:after-returning method="methodReturning" pointcut-ref="pointCut" returning="result"/>
+            <aop:after-throwing method="methodThrowing" pointcut-ref="pointCut" throwing="e"/>
+
+        </aop:aspect>
+    </aop:config>
+
+</beans>
