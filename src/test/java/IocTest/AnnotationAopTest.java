@@ -22,7 +22,7 @@ public class AnnotationAopTest {
         System.out.println(result);
         result = bean.sub(7,3);
         System.out.println(result);
-        result = bean.div(7,0);
+        result = bean.div(4,2);
         System.out.println(result);
         bean.noResult();
     }

@@ -20,7 +20,16 @@ public class MyInvocationHandler implements InvocationHandler {
         } else {
             System.out.println(method.getName()+" method start with ");
         }
-        Object result = method.invoke(target,args);
+        Object result = null;
+        try{
+            System.out.println("前置通知");
+            result = method.invoke(target,args);
+            System.out.println("返回通知");
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("异常通知");
+        }
+        System.out.println("后置通知");
         System.out.println(method.getName()+" method end ... ");
         // 有返回值的方法必须写返回值，要是返回null就会报空指针异常
         return result;

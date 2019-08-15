@@ -1,5 +1,8 @@
 package com.piao.proxy;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ArithmeticCalculatorImpl implements ArithmeticCalculator {
     @Override
     public int add(int i,int j) {
