@@ -8,15 +8,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpringJdbcTest {
     private ApplicationContext context = new ClassPathXmlApplicationContext("beans-properties.xml");
     private JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate = (NamedParameterJdbcTemplate) context.getBean("namedParameterJdbcTemplate");
 
 
     @Test
@@ -81,5 +87,29 @@ public class SpringJdbcTest {
         User user = userRepository.getUser(10);
 
         System.out.println(user);
+    }
+
+    @SuppressWarnings("all")
+    @Test
+    public void testNamedParameter(){
+        String sql = "insert into user (name,email,age) values (:name,:email,:age)";
+        Map<String,Object> parameterMap = new HashMap<>();
+        parameterMap.put("name","Gc");
+        parameterMap.put("email","Gc@163.com");
+        parameterMap.put("age","45");
+        namedParameterJdbcTemplate.update(sql,parameterMap);
+    }
+
+    @Test
+    public void testNamedParameterObject(){
+        String sql = "insert into user (name,email,age,dept_id) values (:name,:email,:age,:dept_id)";
+        User user = new User();
+        user.setName("yum");
+        user.setEmail("yum@163.com");
+        user.setAge(16);
+        user.setDept_id(1);
+
+        SqlParameterSource source = new BeanPropertySqlParameterSource(user);
+        namedParameterJdbcTemplate.update(sql,source);
     }
 }
