@@ -2,15 +2,26 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping package="com.piao.hibernate.entity">
 
-    <class name="com.piao.hibernate.entity.Book" table="sh_book">
-        <id name="id" column="id">
+    <class name="Book" table="sh_book">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
             <generator class="native"/>
         </id>
-        <property name="name" column="name"/>
-        <property name="isbn" column="isbn"/>
-        <property name="price" column="price"/>
-        <property name="stock" column="stock"/>
+        <property name="name" type="java.lang.String">
+            <column name="name" sql-type="varchar"/>
+        </property>
+        <property name="isbn" type="java.lang.String">
+            <column name="isbn" sql-type="varchar"/>
+        </property>
+
+        <property name="price" type="java.math.BigDecimal">
+            <column name="price" sql-type="numeric"/>
+        </property>
+        <property name="stock" type="java.lang.Integer">
+            <column name="stock" sql-type="int"/>
+        </property>
+
     </class>
 </hibernate-mapping>

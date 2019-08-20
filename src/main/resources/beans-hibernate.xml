@@ -5,7 +5,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-
+    <context:component-scan base-package="com.piao.hibernate"/>
     <context:property-placeholder location="classpath:db.properties"/>
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="user" value="${user}"/>
@@ -21,6 +21,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+        <!--// 为什么 hbm.ml的映射文件不能在，编译的target里生成，得手工网里加呢？？？-->
         <property name="mappingLocations" value="classpath:com/piao/hibernate/entity/*.hbm.xml"/>
     </bean>
 
@@ -30,12 +31,13 @@
 
     <tx:advice id="interceptor" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="*"/>
+            <tx:method name="*" propagation="REQUIRES_NEW"/>
         </tx:attributes>
     </tx:advice>
 
     <aop:config>
+        <!--切點要是配的不對，會導致service裏沒有事務，報一下異常  原先execution(* com.piao.hibernate.service.impl*.*(..))-->
+        <!--org.hibernate.HibernateException: Could not obtain transaction-synchronized Session for current thread-->
         <aop:pointcut id="txPointcut" expression="execution(* com.piao.hibernate.service.*.*(..))"/>
         <aop:advisor advice-ref="interceptor" pointcut-ref="txPointcut"/>
     </aop:config>
